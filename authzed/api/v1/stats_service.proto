@@ -1,0 +1,40 @@
+syntax = "proto3";
+package authzed.api.v1;
+
+option go_package = "github.com/authzed/authzed-go/proto/authzed/api/v1";
+option java_package = "com.authzed.api.v1";
+
+import "google/api/annotations.proto";
+
+import "authzed/api/v1/core.proto";
+
+service StatsService {
+  rpc GetRelationshipCardinality(GetRelationshipCardinalityRequest) returns (stream GetRelationshipCardinalityResponse) {
+    option (google.api.http) = {
+      post: "/v1/stats/getrelationshipcardinality"
+      body: "*"
+    };
+  }
+
+  rpc UpdateRelationshipCardinality(UpdateRelationshipCardinalityRequest) returns (stream UpdateRelationshipCardinalityResponse) {
+    option (google.api.http) = {
+      post: "/v1/stats/updaterelationshipcardinality"
+      body: "*"
+    };
+  }
+}
+
+
+message GetRelationshipCardinalityRequest {
+  Relationship relationship = 1;
+}
+
+message GetRelationshipCardinalityResponse {
+  double cardinality = 1;
+}
+
+message UpdateRelationshipCardinalityRequest {
+  Relationship relationship = 1;
+}
+
+message UpdateRelationshipCardinalityResponse {}
